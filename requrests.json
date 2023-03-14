@@ -1,0 +1,10 @@
+[{
+  "source_type": "string",
+  "input_value": "<body><div >hi<h1>should be blue</h1></div></body>",
+  "template": "simple"
+},
+{
+  "source_type": "url",
+  "input_value": "http://google.com",
+  "output_file": "filename"
+}]

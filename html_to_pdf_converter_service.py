@@ -1,9 +1,9 @@
-from typing import Union, BinaryIO
+from typing import Union
 import os
 import pdfkit
 
 import consts
-from StorageOverload import StorageOverload
+from storage_overload_error import StorageOverload
 from consts import SourceTypes
 from pathlib import Path
 
@@ -31,7 +31,7 @@ def can_store_more_files():
 
     # https://pynative.com/python-count-number-of-files-in-a-directory/
     # folder path
-    dir_path = Path(__file__).parent.absolute() / consts.OUTPUTS_FOLDER_NAME
+    dir_path = get_outputs_folder_name()
     count = 0
     # Iterate directory
     for path in os.listdir(dir_path):

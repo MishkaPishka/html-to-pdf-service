@@ -1,5 +1,4 @@
 import json
-
 import pytest
 from main import app
 from consts import SourceTypes, TemplateNames

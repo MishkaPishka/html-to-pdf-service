@@ -3,7 +3,7 @@ import json
 from flask import Flask, jsonify, request, Response
 from consts import SourceTypes
 from html_to_pdf_converter_service import convert
-from invalid_request import InvalidRequest
+from invalid_request_error import InvalidRequest
 from validations import validate_convert_request
 
 app = Flask(__name__)
@@ -34,4 +34,5 @@ def handle_html_to_pdf():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=False, use_reloader=False)
+
