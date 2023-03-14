@@ -1,9 +1,7 @@
-import json
-
 from flask import Flask, jsonify, request, Response
 from consts import SourceTypes
 from html_to_pdf_converter_service import convert
-from invalid_request_error import InvalidRequest
+from errors.invalid_request_error import InvalidRequest
 from validations import validate_convert_request
 
 app = Flask(__name__)

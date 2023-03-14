@@ -3,7 +3,7 @@ import os
 import pdfkit
 
 import consts
-from storage_overload_error import StorageOverload
+from errors.storage_overload_error import StorageOverload
 from consts import SourceTypes
 from pathlib import Path
 
@@ -27,8 +27,6 @@ def get_outputs_folder_name():
 
 
 def can_store_more_files():
-    from pathlib import Path
-
     # https://pynative.com/python-count-number-of-files-in-a-directory/
     # folder path
     dir_path = get_outputs_folder_name()
