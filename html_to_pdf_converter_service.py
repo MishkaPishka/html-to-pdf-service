@@ -7,10 +7,12 @@ from errors.storage_overload_error import StorageOverload
 from consts import SourceTypes
 from pathlib import Path
 
+# windows local installation
 PATH_TO_HTML_TO_PDF = os.environ.get("PATH_TO_HTML_TO_PDF", "C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe")
 CONFIG = pdfkit.configuration(wkhtmltopdf=PATH_TO_HTML_TO_PDF)
 
-mapping = {SourceTypes.STRING: pdfkit.from_string, SourceTypes.URL: pdfkit.from_url, SourceTypes.FILE: pdfkit.from_string}
+mapping = {SourceTypes.STRING: pdfkit.from_string, SourceTypes.URL: pdfkit.from_url,
+           SourceTypes.FILE: pdfkit.from_string}
 
 
 def parse_output_file_name(output_file: str):

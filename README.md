@@ -5,3 +5,7 @@
 <p>&bull; Run the app, see requests.json for templates</p>
 <p>&bull; The app can either return a pdf file or keep it as a file on the server</p>
 <p>&bull; Set env var: MAX_SUPPORTED_FILE_COUNT to regulate the number of files on the server</p>
+
+
+
+docker run -it -p 5000:5000 wkhtml1
