@@ -7,5 +7,6 @@
 <p>&bull; Set env var: MAX_SUPPORTED_FILE_COUNT to regulate the number of files on the server</p>
 
 
-
-docker run -it -p 5000:5000 wkhtml1
+<h4>Docker Use</h4>
+<p>&bull; docker build -t tagname</p>
+<p>&bull; docker run -it -p <port>:5000 tagname

@@ -1,6 +1,15 @@
-h1 { color: blue; }
-
 body {
-  font-family: Algerian;
-  font-weight: lighter;
+    text-align: center;
+}
+
+div {
+    color: red;
+    background-color: green;
+    align-content: center;
+    text-align: center;
+}
+
+p {
+    color: yellow;
+    background-color: purple;
 }

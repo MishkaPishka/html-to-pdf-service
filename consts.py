@@ -12,6 +12,7 @@ class SourceTypes(Enum):
 class TemplateNames(Enum):
     SIMPLE = "simple"
     TODOLIST = "todolist"
+    SKILL_BAR = "skill_bar"
 
 
 MAX_SUPPORTED_FILE_COUNT = os.environ.get('MAX_SUPPORTED_FILE_COUNT', 10)
@@ -22,4 +23,7 @@ TEMPLATES_MAPPING = {
     TemplateNames.SIMPLE.value: os.path.join(Path(__file__).parent.absolute(), TEMPLATES_FOLDER_NAME,
                                              "template_simple.css"),
     TemplateNames.TODOLIST.value: os.path.join(Path(__file__).parent.absolute(), TEMPLATES_FOLDER_NAME,
-                                               "template_todolist.css")}
+                                               "template_todolist.css"),
+    TemplateNames.SKILL_BAR.value: os.path.join(Path(__file__).parent.absolute(), TEMPLATES_FOLDER_NAME,
+                                                "template_skill_bar.css")
+}

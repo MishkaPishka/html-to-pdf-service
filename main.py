@@ -16,9 +16,10 @@ def handle_invalid_usage(error):
 
 @app.before_request
 def before_request():
-    validation_errors = validate_convert_request(request)
-    if validation_errors:
-        raise InvalidRequest(validation_errors)
+    if request.method == "POST":
+        validation_errors = validate_convert_request(request)
+        if validation_errors:
+            raise InvalidRequest(validation_errors)
 
 
 @app.route("/html-to", methods=["POST"])
@@ -31,6 +32,15 @@ def handle_html_to_pdf():
     return jsonify(response_data.get("error")), 500
 
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False, use_reloader=False)
+@app.route("/example", methods=["GET"])
+def generate_example_template():
+    html = "<html><body><h1>Simple Template</h1><div>Example</div><div><p>p example </p></div></body></html>"
+    response_data = convert(SourceTypes.STRING, input_value=html, template=dict(request.args).get("type", "simple"))
 
+    if response_data.get("result"):
+        return Response(response_data.get("result"), mimetype="application/pdf")
+    return jsonify(response_data.get("error")), 500
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=False, use_reloader=False)
