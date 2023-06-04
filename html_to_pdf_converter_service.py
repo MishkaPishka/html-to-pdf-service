@@ -46,7 +46,7 @@ def can_store_more_files():
 
 def set_output_path_if_needed(params, output_file, upload_to_aws):
     output_file = parse_output_file_name(output_file)
-    if output_file and not (HAS_AWS_SUPPORT or upload_to_aws):
+    if output_file and not upload_to_aws:
         if can_store_more_files():
             params["output_path"] = get_outputs_folder_name() / output_file
             print(params["output_path"])
