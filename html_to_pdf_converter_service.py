@@ -75,8 +75,8 @@ def convert(source_type: SourceTypes, input_value, output_file: str = "", templa
             upload_result_to_aws = output_file and HAS_AWS_SUPPORT and upload_to_aws
             # if upload to aws  - create a presigned link
             if upload_result_to_aws:
-                presigned_url = upload(convert_result, output_file, generate_presigned_url=True)
-                return {"result": presigned_url}
+                presigned_url = upload(convert_result, output_file+".pdf", generate_presigned_url=True)
+                return {"result": presigned_url,"type": "json"}
             else:
                 return {"result": convert_result}
         result_message = "process complete a file was created and stored locally" if convert_result else "Conversion failed"

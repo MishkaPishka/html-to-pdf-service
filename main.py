@@ -29,9 +29,12 @@ def before_request():
 @app.route("/html-to", methods=["POST"])
 def handle_html_to_pdf():
     response_data = convert(SourceTypes(request.json.get("source_type")), input_value=request.json.get("input_value"),
-                            output_file=request.json.get("output_file"), template=request.json.get("template"))
+                            output_file=request.json.get("output_file"), template=request.json.get("template"),
+                            upload_to_aws=request.json.get("upload_to_aws"))
 
     if response_data.get("result"):
+        if response_data.get("type", "") == "json":
+            return Response(response_data.get("result"))
         return Response(response_data.get("result"), mimetype="application/pdf")
 
     return jsonify(response_data.get("error")), 500
