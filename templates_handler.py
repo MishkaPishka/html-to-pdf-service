@@ -10,7 +10,7 @@ def save_template(template_data: str, template_name: str):
         full_file_path = os.path.join(TEMPLATES_FOLDER_PATH, filename)
         with open(full_file_path, "wb") as binary_file:
             binary_file.write(data_as_bytes)
-            return filename
+            return template_name
     except Exception as e:
         print(e.__cause__)
         return "Error In Uploading Template"

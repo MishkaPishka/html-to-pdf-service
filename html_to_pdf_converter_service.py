@@ -3,6 +3,7 @@ import os
 import pdfkit
 
 import consts
+from aws_connector import upload, HAS_AWS_SUPPORT
 from errors.storage_overload_error import StorageOverload
 from consts import SourceTypes
 from pathlib import Path
@@ -43,9 +44,9 @@ def can_store_more_files():
     return False
 
 
-def set_output_path_if_needed(params, output_file):
+def set_output_path_if_needed(params, output_file, upload_to_aws):
     output_file = parse_output_file_name(output_file)
-    if output_file:
+    if output_file and not (HAS_AWS_SUPPORT or upload_to_aws):
         if can_store_more_files():
             params["output_path"] = get_outputs_folder_name() / output_file
             print(params["output_path"])
@@ -55,20 +56,31 @@ def set_output_path_if_needed(params, output_file):
     return params
 
 
-def convert(source_type: SourceTypes, input_value, output_file: str = "", template: str = "") -> Union[bytes, bool]:
+def convert(source_type: SourceTypes, input_value, output_file: str = "", template: str = "",
+            upload_to_aws: bool = False) -> Union[bytes, bool]:
     try:
 
         input_param_name = SourceTypes.URL.value if source_type == SourceTypes.URL else "input"
         input_value = bytes(input_value, 'unicode_escape') if source_type == SourceTypes.FILE.value else input_value
         params = {input_param_name: input_value, "configuration": CONFIG}
         if source_type in [SourceTypes.FILE, SourceTypes.STRING] and template:
-            params["css"] = os.path.join(consts.TEMPLATES_FOLDER_NAME, consts.TEMPLATES_MAPPING.get(template, ""))
+            params["css"] = os.path.join(consts.TEMPLATES_FOLDER_NAME, template + ".css")
 
-        set_output_path_if_needed(params, output_file)
+        if output_file and not upload_to_aws:
+            set_output_path_if_needed(params, output_file, upload_to_aws)
+        # if a file is created locally - returns true, if bytestream returns bytestream if fail returns false
         convert_result = mapping.get(source_type)(**params)
-        if convert_result is True:
-            return {"result": "process complete a file was created"}
-        return {"result": convert_result}
+        # bytestream - return to user
+        if type(convert_result) == bytes:
+            upload_result_to_aws = output_file and HAS_AWS_SUPPORT and upload_to_aws
+            # if upload to aws  - create a presigned link
+            if upload_result_to_aws:
+                presigned_url = upload(convert_result, output_file, generate_presigned_url=True)
+                return {"result": presigned_url}
+            else:
+                return {"result": convert_result}
+        result_message = "process complete a file was created and stored locally" if convert_result else "Conversion failed"
+        return {"result": result_message}
 
     except (FileNotFoundError, IOError, OSError, StorageOverload) as e:
         print(e.__repr__)

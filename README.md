@@ -8,5 +8,6 @@
 
 
 <h4>Docker Use</h4>
-<p>&bull; docker build -t tagname</p>
-<p>&bull; docker run -it -p <port>:5000 tagname
+<p>&bull; docker build -t tagname . </p>
+<p>&bull; docker run -it -p <\port>:5000 tagname </p>
+<p> docker run --env-file=env.env -it -p 5000:5000 -t tagname </p>

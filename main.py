@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, request, Response
+
+from aws_connector import HAS_AWS_SUPPORT, REGION
 from consts import SourceTypes
 from html_to_pdf_converter_service import convert
 from errors.invalid_request_error import InvalidRequest
