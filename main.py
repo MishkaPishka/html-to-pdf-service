@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, Response
 from consts import SourceTypes
 from html_to_pdf_converter_service import convert
 from errors.invalid_request_error import InvalidRequest
+from templates_handler import save_template
 from validations import validate_convert_request
 
 app = Flask(__name__)
@@ -16,7 +17,8 @@ def handle_invalid_usage(error):
 
 @app.before_request
 def before_request():
-    if request.method == "POST":
+    is_convert_request = request.base_url.endswith("/html-to")
+    if request.method == "POST" and is_convert_request:
         validation_errors = validate_convert_request(request)
         if validation_errors:
             raise InvalidRequest(validation_errors)
@@ -29,6 +31,7 @@ def handle_html_to_pdf():
 
     if response_data.get("result"):
         return Response(response_data.get("result"), mimetype="application/pdf")
+
     return jsonify(response_data.get("error")), 500
 
 
@@ -40,6 +43,23 @@ def generate_example_template():
     if response_data.get("result"):
         return Response(response_data.get("result"), mimetype="application/pdf")
     return jsonify(response_data.get("error")), 500
+
+
+@app.route("/upload_template", methods=["POST"])
+def upload_template():
+    template_data = request.json.get("content")
+    template_name = request.json.get("name")
+    result = save_template(template_data, template_name)
+    if result == template_name:
+        return template_name, 200
+    else:
+        return "Template Upload Error", 400
+
+
+@app.route("/get_templates", methods=["GET"])
+def get_template_names():
+    import templates_handler
+    return jsonify(templates_handler.get_template_names()), 200
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 from flask_inputs import Inputs
 from flask_inputs.validators import JsonSchema
 from consts import SourceTypes, TemplateNames
+from templates_handler import get_template_names
 
 conversions_schema = {
     "type": "object",
@@ -18,7 +19,7 @@ conversions_schema = {
         },
         "template": {
             "type": "string",
-            "enum":  [template_type.value for template_type in TemplateNames]
+            "enum":  [template_type.value for template_type in TemplateNames.a].extend(get_template_names())
         }
     },
 

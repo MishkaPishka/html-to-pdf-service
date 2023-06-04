@@ -19,11 +19,4 @@ MAX_SUPPORTED_FILE_COUNT = os.environ.get('MAX_SUPPORTED_FILE_COUNT', 10)
 OUTPUTS_FOLDER_NAME = "outputs"
 TEMPLATES_FOLDER_NAME = "templates"
 
-TEMPLATES_MAPPING = {
-    TemplateNames.SIMPLE.value: os.path.join(Path(__file__).parent.absolute(), TEMPLATES_FOLDER_NAME,
-                                             "template_simple.css"),
-    TemplateNames.TODOLIST.value: os.path.join(Path(__file__).parent.absolute(), TEMPLATES_FOLDER_NAME,
-                                               "template_todolist.css"),
-    TemplateNames.SKILL_BAR.value: os.path.join(Path(__file__).parent.absolute(), TEMPLATES_FOLDER_NAME,
-                                                "template_skill_bar.css")
-}
+TEMPLATES_FOLDER_PATH = os.path.join(Path(__file__).parent.absolute(), TEMPLATES_FOLDER_NAME)
