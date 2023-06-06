@@ -20,7 +20,7 @@
   {
     "url": "/upload-template",
     "body": {
-      "content": ".h1 { padding: 40px;color: red;}",
+      "content": "h1 { padding: 40px;color: red;}",
       "name": "template"
     }
   },

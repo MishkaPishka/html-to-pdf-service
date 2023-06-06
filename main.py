@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request, Response
 
+import templates_handler
 from consts import SourceTypes
 from html_to_pdf_converter_service import convert
 from errors.invalid_request_error import InvalidRequest
@@ -23,6 +24,9 @@ def before_request():
         validation_errors = validate_convert_request(request)
         if validation_errors:
             raise InvalidRequest(validation_errors)
+        if request.json.get('template'):
+            if request.json.get('template') not in templates_handler.get_template_names():
+                raise InvalidRequest(f'Invalid Template name, should be in {templates_handler.get_template_names()}')
 
 
 @app.route("/html-to", methods=["POST"])
@@ -59,7 +63,6 @@ def upload_template():
 
 @app.route("/get_templates", methods=["GET"])
 def get_template_names():
-    import templates_handler
     return jsonify(templates_handler.get_template_names()), 200
 
 

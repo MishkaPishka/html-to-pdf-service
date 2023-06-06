@@ -19,7 +19,6 @@ conversions_schema = {
         },
         "template": {
             "type": "string",
-            "enum":  [template_type.value for template_type in TemplateNames]+get_template_names()
         }
     },
 
