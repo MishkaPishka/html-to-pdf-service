@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, request, Response
 
-from aws_connector import HAS_AWS_SUPPORT, REGION
 from consts import SourceTypes
 from html_to_pdf_converter_service import convert
 from errors.invalid_request_error import InvalidRequest
@@ -33,11 +32,8 @@ def handle_html_to_pdf():
                             upload_to_aws=request.json.get("upload_to_aws"))
 
     if response_data.get("result"):
-        if response_data.get("type", "") == "json":
-            return Response(response_data.get("result"))
-        return Response(response_data.get("result"), mimetype="application/pdf")
-
-    return jsonify(response_data.get("error")), 500
+        mimetype = "text/html" if response_data.get("type", "") == "text" else "application/pdf"
+        return Response(response_data.get("result"), mimetype=mimetype)
 
 
 @app.route("/example", methods=["GET"])

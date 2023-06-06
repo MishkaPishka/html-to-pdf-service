@@ -27,6 +27,5 @@ def get_template_names():
     return template_names
 
 
-
 if __name__ == "__main__":
     get_template_names()

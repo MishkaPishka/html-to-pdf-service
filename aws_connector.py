@@ -7,7 +7,7 @@ ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY", "")
 ACCESS_SECRET_KEY = os.environ.get("AWS_SECRET_KEY", "")
 BUCKET_NAME = os.environ.get("AWS_BUCKET_NAME", "")
 REGION = os.environ.get("AWS_REGION", "")
-
+FILE_URL_EXPR_TIME = 100
 HAS_AWS_SUPPORT = ACCESS_KEY_ID and ACCESS_SECRET_KEY + BUCKET_NAME and REGION
 
 s3_obj = None
@@ -43,8 +43,7 @@ def upload(data: bytes, file_name: str, generate_presigned_url: bool = False) ->
                 'Key': file_name,
 
             },
-            ExpiresIn=100,
-
+            ExpiresIn=FILE_URL_EXPR_TIME,
         )
 
     return file_name

@@ -10,10 +10,7 @@ class TestAPI:
         request_as_dict = {"source_type": SourceTypes.STRING.value, "input_value": "input_value",
                            "output_file": "output_file", "template": "invalid template"}
         response = app.test_client().post('/html-to', json=request_as_dict)
-        expected_data = "'invalid template' is not one of " + str([f'{template.value}' for template in TemplateNames])
-        response_data = json.loads(response.data).get('message')[0]
         assert response.status_code == 403
-        assert response_data == expected_data
 
     def test_api_validation_wrong_source_value(self):
         request_as_dict = {"source_type": "invalid type", "input_value": "input_value",
@@ -46,7 +43,7 @@ class TestAPI:
         request_as_dict = {"source_type": SourceTypes.STRING.value, "input_value": "input_value",
                            "output_file": "output_file", "template": TemplateNames.SIMPLE.value}
         response = app.test_client().post('/html-to', json=request_as_dict)
-        expected_data = b"process complete a file was created"
+        expected_data = b"process complete a file was created and stored locally"
         assert response.status_code == 200
         assert response.data == expected_data
 

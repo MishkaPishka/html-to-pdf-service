@@ -1,14 +1,39 @@
 [
   {
-    "source_type": "url",
-    "input_value": "http://google.com",
-    "output_file": "filename"
+    "url": "/html-to",
+    "body": {
+      "source_type": "url",
+      "input_value": "http://google.com",
+      "output_file": "filename"
+    }
   },
   {
-    "source_type": "string",
-    "input_value": "<body><div >Simple Template, this div  should be red with green background</h1></div></body>",
-    "output_file": "example_output2",
-    "template": "simple",
-    "upload_to_aws": true
+    "url": "/html-to",
+    "body": {
+      "source_type": "string",
+      "input_value": "<body><div >Simple Template, this div  should be red with green background</h1></div></body>",
+      "output_file": "simple",
+      "template": "simple",
+      "upload_to_aws": true
+    }
+  },
+  {
+    "url": "/upload-template",
+    "body": {
+      "content": ".h1 { padding: 40px;color: red;}",
+      "name": "template"
+    }
+  },
+  {
+    "url": "/html-to",
+    "body": {
+      "source_type": "string",
+      "input_value": "<h1>Skillbar Template</h1><div class='skills'><p class='skill1'>Java</p><p class='skill2'>PHP</p><p class='skill3'>PYTHON</p><p class='skill4'>CSS</p></div>",
+      "template": "skill_bar",
+      "output_file": "skill_bar_template"
+    }
+  },
+  {
+    "url": "/get_templates"
   }
 ]

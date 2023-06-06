@@ -15,21 +15,21 @@ class TestConverter:
         result = convert(SourceTypes.STRING, input_value="<h1>Test<h1>",
                          output_file='output')
 
-        expected_result = {'result': 'process complete a file was created'}
+        expected_result = {'result': 'process complete a file was created and stored locally', "type": "text"}
         assert result == expected_result
 
     def test_convert_from_file(self):
         result = convert(SourceTypes.STRING, input_value="<h1>Test<h1>",
                          output_file='output')
 
-        expected_result = {'result': 'process complete a file was created'}
+        expected_result = {'result': 'process complete a file was created and stored locally', "type": "text"}
         assert result == expected_result
 
     def test_convert_from_url(self):
         result = convert(SourceTypes.STRING, input_value="http://google.com",
                          output_file='output')
 
-        expected_result = {'result': 'process complete a file was created'}
+        expected_result = {'result': 'process complete a file was created and stored locally', "type": "text"}
         assert result == expected_result
 
     def test_convert_from_string_no_file_created(self):
@@ -55,7 +55,6 @@ class TestConverter:
     @classmethod
     def teardown_class(cls):
         import os
-        files = os.listdir( (str(Path(__file__).parent.absolute() / cls.foldername_for_outputs)))
+        files = os.listdir((str(Path(__file__).parent.absolute() / cls.foldername_for_outputs)))
         for f in files:
-
-            os.remove(str(Path(__file__).parent.absolute() / cls.foldername_for_outputs)+ "\\"+f)
+            os.remove(str(Path(__file__).parent.absolute() / cls.foldername_for_outputs) + "\\" + f)
